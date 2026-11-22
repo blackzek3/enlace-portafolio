@@ -1,4 +1,4 @@
-## Descripción del producto: enlace-portafolio
+## Descripción del producto: enlace-portafolio.
 
 **Propósito:** Aplicación web para crear y compartir un enlace único de portafolio profesional donde desarrolladores y creadores centralizan sus proyectos, redes y perfil en un solo lugar.
 
