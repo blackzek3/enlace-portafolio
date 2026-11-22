@@ -1,93 +1,58 @@
-# PRD · <Nombre de tu producto>
-
-> Documento de requisitos del producto (Product Requirements Document).
-> Complétalo en el Sprint 0 (historia H0.3) y pide la aprobación del profesor en un Issue.
-> Cada requisito funcional (RF) se convierte en un Issue con la plantilla "Historia de usuario".
-
-| Campo | Valor |
-| --- | --- |
-| Alumno | |
-| Proyecto n.º | |
-| Sitio de referencia | |
-| Compañero revisor | |
-| URL desplegada | (se completa en el Sprint 5) |
+# PRD · enlace-portafolio
 
 ## 1. Problema
+Los desarrolladores, diseñadores y profesionales digitales suelen tener su trabajo disperso entre múltiples plataformas (GitHub, LinkedIn, Behance, CV en PDF, demos desplegadas y redes sociales). Compartir varios enlaces por separado dificulta presentar una identidad profesional clara ante reclutadores o clientes, y construir un sitio web desde cero requiere tiempo de diseño y mantenimiento continuo.
 
-¿Qué problema real resuelve y a quién le duele? (3 a 5 líneas)
+**Solución propuesta:** Una aplicación web que permite centralizar proyectos destacados, enlaces profesionales y datos de perfil en una única página pública personalizable accesible mediante una URL corta y directa.
+
+---
 
 ## 2. Usuarios
+- **Creador / Profesional (Usuario autenticado):** Persona que crea una cuenta para configurar su perfil público, agregar o editar sus enlaces y proyectos destacados, y compartir su URL personal.
+- **Visitante / Reclutador (Usuario público):** Persona que accede al enlace público del portafolio sin necesidad de iniciar sesión para revisar la biografía, experiencia, proyectos y medios de contacto del creador.
 
-- **Usuario principal:** quién es, qué necesita, desde qué dispositivo entra.
-- **Usuario secundario:**
+---
 
-## 3. Objetivo y métrica de éxito
+## 3. Alcance
 
-Ejemplo: «Un bodeguero registra una venta en menos de 10 segundos».
+### Incluido en el MVP (Dentro del alcance)
+- Registro, inicio y cierre de sesión de usuarios.
+- Edición de perfil básico (nombre, titular profesional, biografía, avatar y nombre de usuario/slug único).
+- Gestión completa (crear, leer, actualizar, ordenar y eliminar) de enlaces y tarjetas de proyectos.
+- Vista pública del portafolio renderizada dinámicamente según el `slug` del usuario (por ejemplo, `/u/nombre-usuario`).
+- Diseño responsivo adaptable a dispositivos móviles y escritorio.
 
-## 4. Alcance del MVP
+### Fuera del alcance (Versiones futuras)
+- Analíticas detalladas de clics por país o dispositivo.
+- Conexión con dominios propios personalizados.
+- Suscripciones de pago o planes premium.
 
-Entre 5 y 8 funcionalidades que SÍ entran este semestre.
+---
 
-1.
-2.
-3.
+## 4. Requisitos
 
-### Funcionalidades → carpetas de `src/` (screaming architecture)
+### Requisitos Funcionales (RF)
+- **RF-01 (Autenticación):** El sistema debe permitir el registro e inicio de sesión seguro de cada creador para proteger la edición de su portafolio.
+- **RF-02 (Perfil único):** Cada usuario debe contar con un identificador único (`username` / `slug`) que genere su ruta pública sin colisiones.
+- **RF-03 (Gestión de enlaces y proyectos):** El usuario autenticado debe poder agregar título, URL, descripción breve y orden de visualización a cada elemento de su portafolio.
+- **RF-04 (Visibilidad):** El usuario debe poder activar o desactivar elementos individuales sin eliminarlos permanentemente.
+- **RF-05 (Consulta pública):** Cualquier visitante debe poder visualizar el portafolio publicado en modo solo lectura sin requerir autenticación.
 
-Cada funcionalidad del alcance será una carpeta en `src/`. Nómbralas en inglés y en plural.
+### Requisitos No Funcionales (RNF)
+- **RNF-01 (Arquitectura):** El código fuente en `src/` debe organizarse por dominio de negocio (*Screaming Architecture*) separando rutas, lógica de aplicación y acceso a datos.
+- **RNF-02 (Calidad y tipado):** El proyecto debe compilar sin errores en TypeScript estricto y superar las pruebas unitarias, de integración (PostgreSQL) y E2E (Playwright) en CI.
+- **RNF-03 (Rendimiento y usabilidad):** La vista pública del portafolio debe cargar de forma rápida y ser legible en pantallas móviles y de escritorio.
 
-| Funcionalidad | Carpeta |
-| --- | --- |
-| Ejemplo: ventas | `src/sales` |
-| | |
+---
 
-## 5. Fuera de alcance
+## 5. Lista de funcionalidades y estructura en `src/`
 
-Lo que NO vas a construir.
+Cada funcionalidad principal del producto se organizará en su propia carpeta de dominio dentro de `src/`:
 
--
-
-## 6. Requisitos funcionales
-
-| ID | Requisito | Prioridad (alta, media, baja) |
-| --- | --- | --- |
-| RF-01 | | |
-| RF-02 | | |
-
-## 7. Requisitos no funcionales
-
-- Responsive, móvil primero (375 px y 1280 px).
-- Lighthouse ≥ 90 en Accesibilidad y Buenas prácticas.
-- 0 errores en la consola del navegador.
-- Funciona con 10.000 registros sin congelarse.
-
-## 8. Modelo de datos
-
-Diagrama entidad-relación y tablas PostgreSQL con tipos, claves y restricciones.
-GitHub dibuja diagramas Mermaid; edita este ejemplo:
-
-```mermaid
-erDiagram
-  CLIENTE ||--o{ PEDIDO : hace
-  PEDIDO ||--|{ LINEA_PEDIDO : contiene
-  PRODUCTO ||--o{ LINEA_PEDIDO : aparece_en
-  CLIENTE {
-    int id PK
-    text nombre
-    text telefono
-  }
-  PEDIDO {
-    int id PK
-    int cliente_id FK
-    timestamptz creado_en
-  }
-```
-
-## 9. Reto técnico distintivo
-
-El que te tocó en el catálogo y cómo piensas resolverlo.
-
-## 10. Riesgos y preguntas abiertas
-
--
+| Funcionalidad | Descripción breve | Carpeta en `src/` |
+| :--- | :--- | :--- |
+| **Autenticación y sesión** | Registro de cuentas, inicio/cierre de sesión y validación de permisos del creador. | `src/auth/` |
+| **Gestión de perfil** | Edición de datos personales, biografía, avatar y configuración del `slug` público. | `src/profiles/` |
+| **Enlaces y proyectos (Entidad principal)** | API REST y lógica CRUD para crear, editar, reordenar y ocultar enlaces o proyectos del portafolio. | `src/links/` |
+| **Vista pública del portafolio** | Pantalla pública que consulta el perfil y los elementos activos mediante el `slug` del usuario. | `src/portfolio/` |
+| **Utilidades y base de datos compartida** | Conexión a PostgreSQL, middlewares, validaciones comunes y tipos compartidos. | `src/shared/` |
