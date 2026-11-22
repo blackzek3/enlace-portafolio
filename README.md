@@ -1,6 +1,6 @@
 # enlace-portafolio
 
-Aplicación web para centralizar y compartir tu portafolio profesional en un único enlace.
+Aplicación web para centralizar y compartir tu portafolio profesional en un único enlace.x   
 
 Plantilla del proyecto de **Lenguaje de Programación · 2026**.
 La guía completa de la actividad está en el repositorio del curso:
